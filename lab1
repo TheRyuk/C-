@@ -1,0 +1,23 @@
+using System;
+using System.Text;
+
+namespace laboratorna_1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.OutputEncoding = Encoding.UTF8;
+
+            int sideA = 9; //довжина паралелограма
+            double sideB = 7.5; //ширина паралелограма
+            int sideC = 30; //значення, яке повинно бути в градусах
+            double toGradus =sideC* (Math.PI/180) ; // переводим у радіани та множимо на значення
+            double S = (sideA * sideB) * Math.Sin(toGradus);
+
+            Console.WriteLine($"Сторона(см)-> {sideA}\nСторона(см)-> {sideB}\nГрадусна міра кута (градуси)-> {sideC}" +
+                $"\nПлоща паралелограма(см)-> {Math.Round(S, 3)} кв.см");
+            Console.ReadKey(); ;
+        }
+    }
+}
