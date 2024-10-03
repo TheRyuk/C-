@@ -21,3 +21,24 @@ namespace laboratorna_1
         }
     }
 }
+// Оновлене 1 завдання
+using System;
+using System.Text;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Console.OutputEncoding = Encoding.UTF8;
+        Console.Write("Значення часу t: ");
+        double consol = Convert.ToDouble(Console.ReadLine());
+
+        double V(double t){
+            return 3 * Math.Pow(t, 2) - 6 * t;
+        }
+        double speed = V(consol);
+
+        Console.WriteLine($"Момент часу(с)->  {consol} \nШвидкість (м/с)->  {speed}");
+        Console.ReadKey();
+    }
+}
