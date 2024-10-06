@@ -1,0 +1,102 @@
+// Завдання 1
+using System;
+
+namespace Program
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int shared, divider;
+            float result;
+
+            Console.WriteLine("Введiть дiлене: ");
+            shared = Convert.ToInt32(Console.ReadLine());
+
+            Console.WriteLine("Введiть дiльник: ");
+            divider = Convert.ToInt32(Console.ReadLine());
+
+            if ( divider > 0 )
+            {
+                result = (float)shared / divider;
+                Console.WriteLine("Результат:\n" + shared + "/" + divider + " = " + result);
+            }
+            if (divider < 0)
+            {
+                result = (float)shared / divider;
+                Console.WriteLine("Результат:\n" + shared + "/" + divider + " = " + result);
+            }
+            else if (divider == 0 )
+            {
+                Console.WriteLine("Ви помилилися. Дiльник не повинен дорiвнювати нулю");
+                Console.ReadKey();
+            }
+
+        }}}
+
+
+// Завдання 2
+//Лістинг коду з циклом For:
+using System;
+
+public class LR2
+{
+    public static void Main()
+    {
+        int i, n, sum = 0;
+       
+        Console.Write("Введiть кiлькiсть членiв ряду: ");
+        n = Convert.ToInt32(Console.ReadLine());
+        Console.Write("\nУ ряд входять такi числа :");
+        for (i = 1; i <= n; i++)
+        {
+            Console.Write("{0} ", 2 * i - 1);
+            sum += 2 * i - 1;
+        }
+        Console.Write("\nСума з {0} членiв ряду =  {1} \n", n, sum);
+    }
+}
+
+//Лістинг коду з циклом while:
+using System;
+
+public class LR2
+{
+    public static void Main()
+    {
+        int i = 1, n, sum = 0;
+
+        Console.Write("Введiть кiлькiсть членiв ряду: ");
+        n = Convert.ToInt32(Console.ReadLine());
+        Console.Write("\nУ ряд входять такi числа :");
+        while (i <= n)
+        {
+            Console.Write("{0} ", 2 * i - 1);
+            sum += 2 * i - 1;
+            i++;
+        }
+        Console.Write("\nСума з {0} членiв ряду =  {1} \n", n, sum);
+    }
+}
+
+//Лістинг коду з циклом do…while:
+using System;
+
+public class LR2
+{
+    public static void Main()
+    {
+        int i = 1, n, sum = 0;
+
+        Console.Write("Введiть кiлькiсть членiв ряду: ");
+        n = Convert.ToInt32(Console.ReadLine());
+        Console.Write("\nУ ряд входять такi числа :");
+        do
+        {
+            Console.Write("{0} ", 2 * i - 1);
+            sum += 2 * i - 1;
+            i++;
+        }
+        while (i <= n);
+        Console.Write("\nСума з {0} членiв ряду =  {1} \n", n, sum);
+    }}
