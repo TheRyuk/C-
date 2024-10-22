@@ -1,0 +1,55 @@
+using System;
+
+public interface IAppliance
+{
+    void TurnOn();
+    void TurnOff();
+}
+public abstract class Appliance : IAppliance
+{
+    public string Brand { get; set; }
+    public string EnergyClass { get; set; }
+
+    public Appliance(string brand, string energyClass)
+    {
+        Brand = brand;
+        EnergyClass = energyClass;
+    }
+
+    public abstract void TurnOn();
+    public abstract void TurnOff();
+}
+
+public class WashingMachine : Appliance
+{
+   
+    public WashingMachine(string brand, string energyClass) : base(brand, energyClass) { }
+
+
+    public override void TurnOn()
+    {
+        Console.WriteLine($"{Brand} Washing Machine (Energy Class: {EnergyClass}) is now ON");
+    }
+
+    public override void TurnOff()
+    {
+        Console.WriteLine($"{Brand} Washing Machine (Energy Class: {EnergyClass}) is now OFF");
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        
+        WashingMachine myWasher1 = new WashingMachine("Samsung", "A++");
+        WashingMachine myWasher2 = new WashingMachine("Bosch", "B");
+
+        myWasher1.TurnOn();
+        myWasher1.TurnOff();
+        myWasher2.TurnOn();
+        myWasher2.TurnOff();
+        
+        Console.ReadKey();
+    }
+}
