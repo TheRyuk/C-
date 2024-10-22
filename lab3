@@ -1,0 +1,71 @@
+using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        int[] a = { 1, 2, 3, 2, 7, 4, 5 };
+        int[] b = { 2, 9, 4, 5, 5 };
+
+        int[] union = ArrayUnion(a, b);
+
+        // Вивід
+        Console.Write("Об'єднаний масив: ");
+        for (int i = 0; i < union.Length; i++)
+        {
+            Console.Write(union[i]);
+            if (i < union.Length - 1)
+            {
+                Console.Write(", ");
+            }
+        }
+        Console.ReadKey();
+    }
+
+    
+    public static int[] ArrayUnion(int[] a, int[] b)
+    {
+        // Максимальний розмір
+        int[] tempResult = new int[a.Length + b.Length];
+        int count = 0;
+
+        // Унікальні елементи з масиву a
+        for (int i = 0; i < a.Length; i++)
+        {
+            if (!IsInArray(tempResult, a[i], count))
+            {
+                tempResult[count] = a[i];
+                count++;
+            }
+        }
+
+        // Унікальні елементи масиву b
+        for (int i = 0; i < b.Length; i++)
+        {
+            if (!IsInArray(tempResult, b[i], count))
+            {
+                tempResult[count] = b[i];
+                count++;
+            }
+        }
+
+
+        int[] result = new int[count];
+        Array.Copy(tempResult, result, count);
+
+        return result;
+    }
+    //Перевірка чи є елемент
+    public static bool IsInArray(int[] array, int value, int count)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            if (array[i] == value)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+}
