@@ -1,0 +1,96 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+public class MyStack<T>
+{
+    private List<T> _stack; 
+
+    public MyStack()
+    {
+        _stack = new List<T>();
+    }
+
+    // Метод для додавання
+    public void Push(T item)
+    {
+        _stack.Add(item);
+        Console.WriteLine($"{item} додано до стеку.");
+    }
+
+    // Метод для видалення та повернення останнього елемента зі стеку
+    public T Pop()
+    {
+        if (_stack.Count == 0)
+        {
+            throw new InvalidOperationException("Стек порожній. Немає елементів для видалення.");
+        }
+
+        T lastItem = _stack[_stack.Count - 1];
+        _stack.RemoveAt(_stack.Count - 1);
+        Console.WriteLine($"{lastItem} видалено зі стеку.");
+        return lastItem;
+    }
+
+    // Перегляд останнього елемента (без  видалення)
+    public T Peek()
+    {
+        if (_stack.Count == 0)
+        {
+            throw new InvalidOperationException("Стек порожній. Немає елементів для перегляду.");
+        }
+
+        return _stack[_stack.Count - 1];
+    }
+
+    // Перевірка чи стек порожній
+    public bool IsEmpty()
+    {
+        return _stack.Count == 0;
+    }
+
+    // Кількість елементів у стеку
+    public int Count()
+    {
+        return _stack.Count;
+    }
+}
+
+class Program
+{
+
+    static void Main(string[] args)
+    {
+        Console.OutputEncoding = Encoding.UTF8;
+
+
+        MyStack<int> intStack = new MyStack<int>();
+
+        try
+        {
+            // Додаємо елементи до стеку
+            intStack.Push(10);
+            intStack.Push(20);
+            intStack.Push(30);
+
+            // Останній елемент
+            Console.WriteLine($"Останній елемент у стеку: {intStack.Peek()}");
+
+            // Видалення елементу 
+            intStack.Pop();
+
+            // Перегляд останньго елемента
+            Console.WriteLine($"Останній елемент після видалення: {intStack.Peek()}");
+
+            // Видаляю всі елементи
+            intStack.Pop();
+            intStack.Pop();
+            intStack.Pop(); // Тут буде виняток, бо стек порожній
+        }
+        catch (InvalidOperationException ex)
+        {
+            Console.WriteLine($"Помилка: {ex.Message}");
+        }
+        Console.ReadKey();
+    }
+}
