@@ -1,0 +1,55 @@
+using System;
+
+namespace Lab6Event
+{
+    
+    public class MessageEventArgs : EventArgs
+    {
+        public string Message { get; }
+        public MessageEventArgs(string message)
+        {
+            Message = message;
+        }
+    }
+
+    public class MessageSender
+    {
+        public event EventHandler<MessageEventArgs> MessageSent;
+
+        public void SendMessage(string message)
+        {
+            Console.WriteLine("Message sent: " + message);
+            OnMessageSent(new MessageEventArgs(message));
+        }
+
+        protected virtual void OnMessageSent(MessageEventArgs e)
+        {
+            MessageSent?.Invoke(this, e);
+        }
+    }
+
+    public class Logger
+    {
+        public void OnMessageSent(object sender, MessageEventArgs e)
+        {
+            Console.WriteLine("Message logged: " + e.Message);
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            
+            var messageSender = new MessageSender();
+            var logger = new Logger();
+
+            messageSender.MessageSent += logger.OnMessageSent;
+
+            
+            messageSender.SendMessage("Hello, world!");
+            messageSender.SendMessage("Test messange");
+            Console.ReadKey();
+        }
+    }
+}
