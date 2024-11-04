@@ -1,0 +1,111 @@
+using System;
+using System.Threading.Tasks;
+
+namespace DeadlockDemo
+{
+    class Program
+    {
+        private static readonly object lock1 = new object();
+        private static readonly object lock2 = new object();
+
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Демонстрація Deadlock:");
+            SimulateDeadlock();
+
+            Console.WriteLine("\nУникнення Deadlock:");
+            AvoidDeadlock();
+
+            Console.WriteLine("\nПрограма завершена.");
+            Console.ReadKey();
+        }
+
+        // Метод, що симулює виникнення deadlock
+        static void SimulateDeadlock()
+        {
+            Task task1 = Task.Run(() => Method1());
+            Task task2 = Task.Run(() => Method2());
+
+            try
+            {
+                Task.WaitAll(task1, task2);
+            }
+            catch (AggregateException ex)
+            {
+                Console.WriteLine("Виникла помилка: " + ex.Message);
+            }
+        }
+
+        // Метод, що уникає deadlock
+        static void AvoidDeadlock()
+        {
+            Task task1 = Task.Run(() => SafeMethod1());
+            Task task2 = Task.Run(() => SafeMethod2());
+
+            try
+            {
+                Task.WaitAll(task1, task2);
+            }
+            catch (AggregateException ex)
+            {
+                Console.WriteLine("Виникла помилка: " + ex.Message);
+            }
+        }
+
+        static void Method1()
+        {
+            lock (lock1)
+            {
+                Console.WriteLine("Method1: заблокував lock1");
+               
+                Console.WriteLine("Method1: намагається заблокувати lock2...");
+                lock (lock2)
+                {
+                    Console.WriteLine("Method1: заблокував lock2");
+                }
+            }
+        }
+
+        static void Method2()
+        {
+            lock (lock2)
+            {
+                Console.WriteLine("Method2: заблокував lock2");
+              
+                Console.WriteLine("Method2: намагається заблокувати lock1...");
+                lock (lock1)
+                {
+                    Console.WriteLine("Method2: заблокував lock1");
+                }
+            }
+        }
+
+        static void SafeMethod1()
+        {
+            lock (lock1)
+            {
+                Console.WriteLine("SafeMethod1: заблокував lock1");
+          
+                Console.WriteLine("SafeMethod1: намагається заблокувати lock2...");
+                lock (lock2)
+                {
+                    Console.WriteLine("SafeMethod1: заблокував lock2");
+                }
+            }
+        }
+
+        static void SafeMethod2()
+        {
+            lock (lock1) // Зміна порядку блокувань
+            {
+                Console.WriteLine("SafeMethod2: заблокував lock1");
+              
+                Console.WriteLine("SafeMethod2: намагається заблокувати lock2...");
+                lock (lock2)
+                {
+                    Console.WriteLine("SafeMethod2: заблокував lock2");
+                }
+            }
+        }
+    }
+}
