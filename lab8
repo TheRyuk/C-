@@ -1,0 +1,37 @@
+using System;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace AsyncIntervalExample
+{
+    class Program
+    {
+        static async Task Main(string[] args)
+        {
+            Console.OutputEncoding = Encoding.UTF8;
+            Console.WriteLine("Початок циклічних викликів:");
+
+            // Викликаємо метод, що викликає цільову функцію кожні 2 секунди
+            await CallFunctionAtInterval(TargetFunction, 2000);
+
+            Console.WriteLine("Завершення циклу.");
+        }
+
+        // Асинхронний метод для циклічного виклику іншої функції
+        static async Task CallFunctionAtInterval(Func<Task> functionToCall, int intervalMilliseconds)
+        {
+            while (true)
+            {
+                await functionToCall();            
+                await Task.Delay(intervalMilliseconds); 
+            }
+        }
+
+        // Цільова функція, яка буде викликатися кожні 2 секунди
+        static async Task TargetFunction()
+        {
+            Console.WriteLine($"TargetFunction викликана в: {DateTime.Now}");
+            await Task.CompletedTask; // Імітація асинхронної операції
+        }
+    }
+}
